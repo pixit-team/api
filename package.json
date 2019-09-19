@@ -1,0 +1,25 @@
+{
+    "name": "melosync-api",
+    "version": "0.1.0",
+    "main": "sources/main.ts",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "start": "ts-node sources/main.ts",
+        "dev": "nodemon -L "
+    },
+    "dependencies": {
+        "@hapi/boom": "^7.4.3",
+        "@types/express": "^4.17.1",
+        "@types/hapi__boom": "^7.4.1",
+        "@types/morgan": "^1.7.37",
+        "@types/node": "^12.7.5",
+        "express": "^4.17.1",
+        "morgan": "^1.9.1",
+        "ts-node": "^8.4.1",
+        "typescript": "^3.6.3"
+    },
+    "engines": {
+        "node": "11.15.0"
+    }
+}
