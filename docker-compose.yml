@@ -1,13 +1,32 @@
 version: "3"
 
 services:
+  db:
+    image: postgres:11.5-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+
   api:
     build:
       context: .
       dockerfile: dev.Dockerfile
+    depends_on:
+      - db
     volumes:
       - ./:/app/
     ports:
       - 3000:3000
     environment:
       PORT: 3000
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_PASSWORD: password
+
+volumes:
+  db_data:
