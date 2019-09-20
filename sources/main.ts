@@ -1,29 +1,37 @@
-import { Server } from "./Server";
-import { createRouter } from "./router";
+import Server from "./Server";
+import ApiEndpointController from "./controllers/ApiEndpointController";
+import Controllers from "./controllers";
+import BaseRouter from "./routers/BaseRouter";
+import ApiEndpointRouter from "./routers/ApiEndpointRouter";
 
-import { ApiEndpointController } from "./controllers/ApiEndpointController";
-
-const main = () => {
+const main = (): void => {
+    // Retrieve configuration
     const PORT = parseInt(process.env.PORT || '', 10);
     if (isNaN(PORT)) {
         throw new Error('Missing environment variable "PORT"');
     }
 
-    // Server
+    // Create and start Server
     const server = createServer();
-    server.start(PORT, () => {
+    server.listen(PORT, () => {
         console.info(`Server started on port ${PORT}`);
-    })
-};
+    });
+}
 
-const createServer = () => {
-    // Controllers
-    const apiEndpointController = new ApiEndpointController();
+const createServer = (): Server => {
+    // Create Controllers
+    const controllers = new Controllers(
+        new ApiEndpointController(),
+    );
+
+    // Create Routers
+    const routers: BaseRouter[] = [
+        new ApiEndpointRouter(controllers),
+    ];
 
     // Create Server
-    const router = createRouter(apiEndpointController);
-    return new Server(router);
-};
+    return new Server(routers);
+}
 
 if (require.main === module) {
     main();

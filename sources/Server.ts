@@ -1,50 +1,24 @@
-import Boom from "@hapi/boom";
-import ExpressApp, { Express, NextFunction, Request, Response, Router } from "express";
-import Morgan from "morgan";
+import Koa from "koa";
+import KoaLogger from "koa-logger";
+import BaseRouter from "./routers/BaseRouter";
 
-export class Server {
+export default class Server {
 
-    private readonly app: Express;
+    private readonly koaApp: Koa;
 
-    constructor(router: Router) {
-        this.app = ExpressApp();
+    constructor(routers: BaseRouter[]) {
+        this.koaApp = new Koa();
 
-        this.app.use(ExpressApp.json());
-        this.app.use(Morgan("dev"));
+        // Add middlewares
+        this.koaApp.use(KoaLogger());
 
-        this.app.use(router);
-
-        this.add404Handler();
-        this.addErrorHandler();
+        // Bind routers
+        routers.forEach(router => {
+            this.koaApp.use(router.routes());
+        })
     }
 
-    public readonly start = (port: number, onStart: () => void) => {
-        this.app.listen(port, onStart);
-    }
-
-    private add404Handler(): void {
-        this.app.use((_req: Request, res: Response, _next: NextFunction) => {
-            res.status(404).json({
-                message: "Route or resource not found",
-            });
-        });
-    }
-
-    private addErrorHandler(): void {
-        this.app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
-            if ((<any>error).isBoom) {
-                const boom = <Boom>error;
-
-                res.status(boom.output.statusCode).json({
-                    message: boom.message,
-                });
-            }
-            else {
-                console.error(error.stack);
-                res.status(500).json({
-                    message: "Internal server error",
-                });
-            }
-        });
+    public readonly listen = (port: number, callback: () => void): void => {
+        this.koaApp.listen(port, callback);
     }
 }

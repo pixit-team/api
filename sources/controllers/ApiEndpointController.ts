@@ -1,9 +1,12 @@
-import { Request, Response } from "express";
+import { Context } from "koa";
 
-export class ApiEndpointController {
-    public readonly endpoint = (_req: Request, res: Response) => {
-        res.status(200).json({
-            message: "melosync API !",
-        });
-    }
+export default class ApiEndpointController {
+
+    public readonly endpoint = async (ctx: Context): Promise<void> => {
+        ctx.status = 200;
+        ctx.body = {
+            name: "melosync API",
+            heartbeat: new Date(),
+        };
+    };
 }
