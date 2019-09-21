@@ -8,8 +8,8 @@
         "start": "ts-node sources/main.ts",
         "dev": "nodemon -L",
         "typeorm": "ts-node ./node_modules/typeorm/cli.js",
-        "linter:check": "eslint --config .eslintrc.json 'sources/**'",
-        "linter:fix": "eslint --config .eslintrc.json --fix 'sources/**'",
+        "lint": "eslint --config .eslintrc.json 'sources/**'",
+        "lint:fix": "eslint --config .eslintrc.json --fix 'sources/**'",
         "readme:update": "markdown-toc -i README.md"
     },
     "dependencies": {

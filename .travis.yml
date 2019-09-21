@@ -7,7 +7,7 @@ services:
   - postgresql
 
 env:
-  - TEST_SUITE=linter:check
+  - TEST_SUITE=lint
 
 install:
   - npm install
