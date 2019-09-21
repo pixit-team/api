@@ -7,7 +7,9 @@
     "scripts": {
         "start": "ts-node sources/main.ts",
         "dev": "nodemon -L",
-        "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+        "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+        "linter:check": "eslint --config .eslintrc.json 'sources/**'",
+        "linter:fix": "eslint --config .eslintrc.json --fix 'sources/**'"
     },
     "dependencies": {
         "@types/koa": "^2.0.49",
@@ -23,7 +25,10 @@
         "typescript": "^3.6.3"
     },
     "devDependencies": {
-        "nodemon": "^1.19.2"
+        "eslint": "^6.4.0",
+        "eslint-config-airbnb-typescript-prettier": "^1.4.0",
+        "nodemon": "^1.19.2",
+        "prettier": "^1.18.2"
     },
     "engines": {
         "node": "11.15.0"
