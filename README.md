@@ -5,6 +5,14 @@ Melosync web API
 ## Table of content
 
 <!-- toc -->
+
+- [Quickstart (with Docker)](#quickstart-with-docker)
+  * [Prerequisites](#prerequisites)
+  * [Up and running](#up-and-running)
+  * [Other commands](#other-commands)
+    + [Database](#database)
+    + [Shell access](#shell-access)
+
 <!-- tocstop -->
 
 ## Quickstart (with Docker)

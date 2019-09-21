@@ -9,7 +9,8 @@
         "dev": "nodemon -L",
         "typeorm": "ts-node ./node_modules/typeorm/cli.js",
         "linter:check": "eslint --config .eslintrc.json 'sources/**'",
-        "linter:fix": "eslint --config .eslintrc.json --fix 'sources/**'"
+        "linter:fix": "eslint --config .eslintrc.json --fix 'sources/**'",
+        "readme:update": "markdown-toc -i README.md"
     },
     "dependencies": {
         "@types/koa": "^2.0.49",
@@ -27,6 +28,7 @@
     "devDependencies": {
         "eslint": "^6.4.0",
         "eslint-config-airbnb-typescript-prettier": "^1.4.0",
+        "markdown-toc": "^1.2.0",
         "nodemon": "^1.19.2",
         "prettier": "^1.18.2"
     },
