@@ -1,2 +1,3 @@
-sources/models/migrations/
 node_modules/
+
+sources/models/migrations/

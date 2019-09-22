@@ -2,10 +2,9 @@
 
 [![Build Status](https://travis-ci.org/melosync/api.svg?branch=master)](https://travis-ci.org/melosync/api)
 
-Melosync web API
-
 ## Table of content
 
+<!-- The section between the `toc` tags is automatically generated with `npm run readme:update` -->
 <!-- toc -->
 
 - [Quickstart (with Docker)](#quickstart-with-docker)
@@ -21,6 +20,7 @@ Melosync web API
 - [Database Migrations](#database-migrations)
   * [Apply the migrations](#apply-the-migrations)
   * [Create a new migration](#create-a-new-migration)
+- [Deployment](#deployment)
 
 <!-- tocstop -->
 
@@ -42,7 +42,7 @@ To start the local development server, run the following:
 docker-compose up api
 ```
 
-The server will be started and listen on your local port `3000`. You will be able to access it throught [http://localhost:3000/](http://localhost:3000/).
+The server will be started and listen on your local port `5000`. You will be able to access it throught [http://localhost:5000/](http://localhost:5000/).
 
 To stop all running containers, run:
 
@@ -117,7 +117,8 @@ Or you can specify each field individually:
 
 ## Database Migrations
 
-> Be sure to have the required environment variables defined before running the commands introduced in this section. See [Database Environment](#database-1).
+> Be sure to have the required environment variables defined before running the
+> commands introduced in this section. See [Database Environment](#environment-variables).
 
 > You should also make sure that your database is running.
 
@@ -128,17 +129,26 @@ A `typeorm` script is defined in the package.json to help you interact with our 
 To apply all pending migrations and update your database schema, run the following:
 
 ```sh
-npm run typeorm migration:run
+npm run typeorm -- migration:run
 ```
+
+> The `--` here is used to make sure that the next passed parameters or arguments
+> are not interpreted by npm and forwarded as is to typeorm's cli. This is
+> especialy useful in the next command.
 
 ### Create a new migration
 
 To create a new migration from the model entities, run the following command:
 
 ```sh
-npm run typeorm migration:generate -n NameOfTheMigration
+npm run typeorm -- migration:generate -n NameOfTheMigration
 ```
 
-It will create a new migration file in `src/models/migrations`.
+It will create a new migration file in `sources/models/migrations` named
+`$TIMESTAMP-NameOfTheMigration`.
 
 > Be sure to apply all pending migrations before creating a new one or the generated migration will be incorrect.
+
+## Deployment
+
+// TODO

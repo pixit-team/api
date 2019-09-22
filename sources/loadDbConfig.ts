@@ -8,7 +8,7 @@ const loadDbConfig = (ormconfigPath: string): ConnectionOptions => {
 
     cli: undefined,
     entities: [`${__dirname}/models/entities/*{.ts,.js}`],
-    migrations: undefined
+    migrations: undefined,
   };
 };
 

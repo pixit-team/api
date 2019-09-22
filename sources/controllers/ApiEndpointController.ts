@@ -5,7 +5,7 @@ export default class ApiEndpointController {
     ctx.status = 200;
     ctx.body = {
       name: "melosync API",
-      heartbeat: new Date()
+      heartbeat: new Date(),
     };
   };
 }
