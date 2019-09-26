@@ -11,7 +11,7 @@ import BaseRouter from "./routers/BaseRouter";
 import ApiEndpointRouter from "./routers/ApiEndpointRouter";
 // modules
 import loadDbConfig from "./loadDbConfig";
-import Server from "./Server";
+import Server from "./server";
 
 const createServer = (conn: Connection): Server => {
   // Create Repositories
