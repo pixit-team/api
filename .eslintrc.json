@@ -27,7 +27,9 @@
     "object-curly-newline": "off",
     "quotes": ["error", "double", {
       "avoidEscape": true
-    }]
+    }],
+    "semi": "off",
+    "@typescript-eslint/semi": ["error"]
   },
   "settings": {
     "import/resolver": {

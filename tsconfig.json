@@ -6,6 +6,7 @@
         "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "typeRoots": ["./typings", "./node_modules/@types"],
 
         /* Strict Type-Checking Options */
         "strict": true,

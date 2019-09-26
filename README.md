@@ -5,6 +5,7 @@
 ## Table of content
 
 <!-- The section between the `toc` tags is automatically generated with `npm run readme:update` -->
+
 <!-- toc -->
 
 - [Quickstart (with Docker)](#quickstart-with-docker)
@@ -20,6 +21,9 @@
 - [Database Migrations](#database-migrations)
   * [Apply the migrations](#apply-the-migrations)
   * [Create a new migration](#create-a-new-migration)
+- [Working with translations](#working-with-translations)
+  * [Using localized values](#using-localized-values)
+  * [Adding new keys](#adding-new-keys)
 - [Deployment](#deployment)
 
 <!-- tocstop -->
@@ -148,6 +152,39 @@ It will create a new migration file in `sources/models/migrations` named
 `$TIMESTAMP-NameOfTheMigration`.
 
 > Be sure to apply all pending migrations before creating a new one or the generated migration will be incorrect.
+
+## Working with translations
+
+We use `i18next` and its koa module `koa-i18next` to handle localization.
+See more about i18next [here](https://www.i18next.com/).
+
+Translation files can be found in `sources/assets/locales`. Each folder corresponds to a locale and contains a `translation.json`.
+
+### Using localized values
+
+Controllers will receive locale information in their `Koa.Context` argument.
+This context will then contain a function `t` that can be used like this:
+
+```ts
+function controller = (ctx: Koa.BaseContext): Promise<void> => {
+  ctx.status = 200;
+  ctx.body = {
+    /* Will return the value associated with the key in the `translation.json` file */
+    message: ctx.t("translation.key")
+  };
+}
+```
+
+### Adding new keys
+
+When dealing with translation keys, prevent editing the `translation.json` file yourself. Instead use the script `i18next:extract`.
+
+It will read the whole code base looking for calls to `t(...)` and generate new entries
+for the keys that are not listed in the translation file.
+
+```sh
+npm run i18next:extract
+```
 
 ## Deployment
 

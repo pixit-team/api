@@ -1,5 +1,5 @@
 {
     "watch": "sources",
-    "ext": "ts",
+    "ext": "ts,json",
     "exec": "npm run start"
 }
