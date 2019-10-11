@@ -7,17 +7,11 @@ branches:
 node_js:
   - "11.15.0"
 
-services:
-  - postgresql
-
 env:
   - TEST_SUITE=lint
 
 install:
   - npm install
-
-before_script:
-  - npm run typeorm migration:run
 
 script:
   - npm run $TEST_SUITE
