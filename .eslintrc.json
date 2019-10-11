@@ -2,6 +2,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "prettier",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
     "plugin:import/errors",
@@ -24,7 +25,9 @@
     "no-console": ["error", {
       "allow": ["info", "warn", "error"]
     }],
+    "no-underscore-dangle": "off",
     "object-curly-newline": "off",
+    "operator-linebreak": "off",
     "quotes": ["error", "double", {
       "avoidEscape": true
     }],
