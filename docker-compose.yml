@@ -7,13 +7,12 @@ version: "3"
 
 services:
   db:
-    image: postgres:11.5-alpine
+    image: mongo:4.2
+    restart: always
     volumes:
-      - db_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
+      - db_data:/data/db
     ports:
-      - 5432:5432
+      - 27017:27017
 
   api:
     build:
@@ -27,11 +26,7 @@ services:
       - 5000:5000
     environment:
       PORT: 5000
-      DB_NAME: postgres
-      DB_USER: postgres
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_PASSWORD: password
+      DATABASE_URL: "mongodb://db:27017/mongo"
 
 volumes:
   db_data:

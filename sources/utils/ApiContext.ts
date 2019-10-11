@@ -1,6 +1,6 @@
 import Koa from "koa";
 
-import User from "../models/entities/User";
+import { User } from "../models/schemas/UserSchema";
 
 interface ApiContextState {
   requestingUser?: User;

@@ -1,4 +1,4 @@
-import { createConnection, Connection } from "typeorm";
+import { createConnection, Connection } from "mongoose";
 
 // Controllers
 import Controllers from "./controllers";
@@ -9,15 +9,18 @@ import UserRepository from "./models/repositories/UserRepository";
 // Routers
 import BaseRouter from "./routers/BaseRouter";
 import ApiEndpointRouter from "./routers/ApiEndpointRouter";
+// Utils
+import envOrThrow from "./utils/envOrThrow";
 // modules
-import loadDbConfig from "./loadDbConfig";
 import Server from "./server";
+
+const DEFAULT_PORT = "5000";
 
 const createServer = (conn: Connection): Server => {
   // Create Repositories
   const repositories = new Repositories(new UserRepository(conn));
 
-  if (!repositories) throw new Error("Bruh"); // TODO REMOVE
+  if (!repositories) throw new Error("Bruh"); // TODO REMOVE, this if is because of the "unused" warning
 
   // Create Controllers
   const controllers = new Controllers(new ApiEndpointController());
@@ -30,18 +33,20 @@ const createServer = (conn: Connection): Server => {
 };
 
 const main = (): void => {
-  const dbConfig = loadDbConfig("../ormconfig.js");
+  const DB_URL = envOrThrow("DATABASE_URL");
 
-  // Retrieve configuration
-  const PORT = parseInt(process.env.PORT || "", 10);
+  const PORT = parseInt(process.env.PORT || DEFAULT_PORT, 10);
   if (Number.isNaN(PORT)) {
     throw new Error('Missing environment variable "PORT"');
   }
 
-  createConnection(dbConfig).then(conn => {
+  // Connect to the Database and start the Server
+  createConnection(DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(conn => {
     console.info("[INFO] Connected to database");
 
-    // Create Server
     const server = createServer(conn);
     server.listen(PORT, () => {
       console.info(`[INFO] Server started on port ${PORT}`);

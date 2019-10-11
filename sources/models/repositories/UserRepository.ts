@@ -1,6 +1,4 @@
-import { Connection } from "typeorm";
-
-import User from "../entities/User";
+import { Connection } from "mongoose";
 
 export default class UserRepository {
   private readonly conn: Connection;
@@ -9,12 +7,12 @@ export default class UserRepository {
     this.conn = conn;
   }
 
-  /**
-   * Find a specific User by its id
-   *
-   * @param   userId
-   */
-  public readonly getUserById = (userId: number): Promise<User | undefined> => {
-    return this.conn.getRepository(User).findOne(userId);
+  // TODO: Get user by id
+
+  // TODO: REMOVE
+  public readonly todoREMOVE = (): void => {
+    if (!this.conn) {
+      throw new Error("Bruuh");
+    }
   };
 }

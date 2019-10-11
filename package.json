@@ -7,7 +7,6 @@
     "scripts": {
         "start": "ts-node --project tsconfig.json sources/main.ts",
         "dev": "nodemon -L",
-        "typeorm": "ts-node ./node_modules/typeorm/cli.js",
         "lint": "eslint --config .eslintrc.json 'sources/**/*.ts'",
         "lint:fix": "eslint --config .eslintrc.json --fix 'sources/**/*.ts'",
         "i18next:extract": "i18next 'sources/**/*.ts' -c i18next-parser.config.js",
@@ -18,6 +17,7 @@
         "@types/koa": "^2.0.49",
         "@types/koa-logger": "^3.1.1",
         "@types/koa-router": "^7.0.42",
+        "@types/mongoose": "^5.5.20",
         "@types/node": "^12.7.5",
         "i18next": "^17.0.16",
         "i18next-sync-fs-backend": "^1.1.1",
@@ -25,9 +25,8 @@
         "koa-i18next": "^1.1.1",
         "koa-logger": "^3.2.1",
         "koa-router": "^7.4.0",
-        "pg": "^7.12.1",
+        "mongoose": "^5.7.4",
         "ts-node": "^8.4.1",
-        "typeorm": "^0.2.19",
         "typescript": "^3.6.3"
     },
     "devDependencies": {
