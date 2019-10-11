@@ -5,6 +5,7 @@ export default abstract class BaseRouter {
 
   constructor(prefix: string) {
     this.router = new KoaRouter({ prefix });
+    console.info(`[INFO] Server: Route: "${prefix}" registered`);
   }
 
   public readonly routes = (): KoaRouter.IMiddleware => {
