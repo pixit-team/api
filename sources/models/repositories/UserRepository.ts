@@ -1,18 +1,34 @@
-import { Connection } from "mongoose";
+import Models from "../Models";
+import { User, UserDocument } from "../schemas/UserSchema";
 
 export default class UserRepository {
-  private readonly conn: Connection;
+  private readonly models: Models;
 
-  constructor(conn: Connection) {
-    this.conn = conn;
+  constructor(models: Models) {
+    this.models = models;
   }
 
-  // TODO: Get user by id
+  /**
+   * Create a new User
+   *
+   * @param user  The User to create
+   *
+   * @return  The created User
+   */
+  public readonly create = async (user: User): Promise<UserDocument> => {
+    return this.models.userModel.create(user);
+  };
 
-  // TODO: REMOVE
-  public readonly todoREMOVE = (): void => {
-    if (!this.conn) {
-      throw new Error("Bruuh");
-    }
+  /**
+   * Find a specific User using its `email`
+   *
+   * @param email - The email of the User to look for
+   *
+   * @return  The corresponding User or `null`
+   */
+  public readonly findOneByEmail = async (
+    email: string,
+  ): Promise<User | null> => {
+    return this.models.userModel.findOne({ email }).exec();
   };
 }
