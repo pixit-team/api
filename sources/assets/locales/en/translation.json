@@ -1,5 +1,25 @@
 {
   "api": {
     "greetings": "Welcome to Melosync's API !"
+  },
+  "req": {
+    "user": {
+      "created": "User created",
+      "field": {
+        "email": {
+          "alreadyExists": "Email already exists",
+          "invalid": "Invalid email format",
+          "missing": "Missing \"email\""
+        },
+        "name": {
+          "invalid": "Invalid name format",
+          "missing": "Missing \"name\""
+        },
+        "password": {
+          "invalid": "Password must contain digits, symbols, lowercase and uppercase letters and be at least 8 characters long",
+          "missing": "Missing \"password\""
+        }
+      }
+    }
   }
 }

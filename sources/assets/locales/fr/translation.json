@@ -1,5 +1,25 @@
 {
   "api": {
     "greetings": "Bienvenue sur l'API Melosync !"
+  },
+  "req": {
+    "user": {
+      "created": "Utilisateur créé",
+      "field": {
+        "email": {
+          "alreadyExists": "Cette adresse email est déjà utilisée",
+          "invalid": "Format de courriel invalide",
+          "missing": "Champ \"email\" manquant"
+        },
+        "name": {
+          "invalid": "Format du nom invalide",
+          "missing": "Champ \"name\" manquant"
+        },
+        "password": {
+          "invalid": "Le mot de passe doit faire au moins 8 charactères et contenir des majuscules, minuscules, chiffres et charactères spéciaux",
+          "missing": "Champ \"password\" manquant"
+        }
+      }
+    }
   }
 }
