@@ -3,13 +3,20 @@
     "greetings": "Welcome to Melosync's API !"
   },
   "req": {
+    "auth": {
+      "failed": "Failed to log in",
+      "local": {
+        "loggedIn": "Login successful"
+      }
+    },
     "user": {
       "created": "User created",
       "field": {
         "email": {
           "alreadyExists": "Email already exists",
           "invalid": "Invalid email format",
-          "missing": "Missing \"email\""
+          "missing": "Missing \"email\"",
+          "noMatch": "No matching email"
         },
         "name": {
           "invalid": "Invalid name format",

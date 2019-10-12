@@ -3,13 +3,20 @@
     "greetings": "Bienvenue sur l'API Melosync !"
   },
   "req": {
+    "auth": {
+      "failed": "La connexion a échouée",
+      "local": {
+        "loggedIn": "Connexion réussie"
+      }
+    },
     "user": {
       "created": "Utilisateur créé",
       "field": {
         "email": {
           "alreadyExists": "Cette adresse email est déjà utilisée",
           "invalid": "Format de courriel invalide",
-          "missing": "Champ \"email\" manquant"
+          "missing": "Champ \"email\" manquant",
+          "noMatch": "Pas de compte correspondant à ce courriel"
         },
         "name": {
           "invalid": "Format du nom invalide",
