@@ -15,7 +15,7 @@ export default function loadConfig(): Config {
   if (Number.isNaN(config.PORT)) {
     throw new Error("Invalid PORT");
   }
-  config.DB_URL = envOrThrow("DATABASE_URL");
+  config.DB_URL = envOrThrow("MONGODB_URI");
   config.JWT_PRIVATE_KEY = envOrThrow("JWT_PRIVATE_KEY");
 
   return config;
