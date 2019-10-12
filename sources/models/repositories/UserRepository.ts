@@ -28,7 +28,7 @@ export default class UserRepository {
    */
   public readonly findOneByEmail = async (
     email: string,
-  ): Promise<User | null> => {
+  ): Promise<UserDocument | null> => {
     return this.models.userModel.findOne({ email }).exec();
   };
 }

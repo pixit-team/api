@@ -7,5 +7,6 @@ export default class AuthLocalRouter extends BaseRouter {
     super("/auth/local");
 
     this.router.post("/register", controllers.authLocalController.register);
+    this.router.post("/login", controllers.authLocalController.login);
   }
 }

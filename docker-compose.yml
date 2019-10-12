@@ -27,6 +27,7 @@ services:
     environment:
       PORT: 5000
       DATABASE_URL: "mongodb://db:27017/mongo"
+      JWT_PRIVATE_KEY: "secret"
 
 volumes:
   db_data:
