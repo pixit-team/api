@@ -21,15 +21,12 @@ import PasswordValidator from "./validators/PasswordValidator";
 import BaseRouter from "./routers/BaseRouter";
 import ApiEndpointRouter from "./routers/ApiEndpointRouter";
 import AuthLocalRouter from "./routers/AuthLocalRouter";
-//
+// Views
 import Views from "./views";
 import UserView from "./views/UserView";
-// Utils
-import envOrThrow from "./utils/envOrThrow";
 // modules
+import loadConfig, { Config } from "./config";
 import Server from "./server";
-
-const DEFAULT_PORT = "5000";
 
 const createServer = (conn: Connection, config: Config): Server => {
   // Models
@@ -75,17 +72,10 @@ const createServer = (conn: Connection, config: Config): Server => {
 };
 
 const main = (): void => {
-  const DB_URL = envOrThrow("DATABASE_URL");
-
-  const PORT = parseInt(process.env.PORT || DEFAULT_PORT, 10);
-  if (Number.isNaN(PORT)) {
-    throw new Error('Missing environment variable "PORT"');
-  }
-
-  const JWT_PRIVATE_KEY = envOrThrow("JWT_PRIVATE_KEY");
+  const CONFIG = loadConfig();
 
   // Connect to the Database and start the Server
-  createConnection(DB_URL, {
+  createConnection(CONFIG.DB_URL, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -93,15 +83,11 @@ const main = (): void => {
     console.info("[INFO] Connected to database");
 
     console.info("[INFO] Server: loading...");
-    const server = createServer(conn, { JWT_PRIVATE_KEY });
-    server.listen(PORT, () => {
-      console.info(`[INFO] Server: Started on port ${PORT}`);
+    const server = createServer(conn, CONFIG);
+    server.listen(CONFIG.PORT, () => {
+      console.info(`[INFO] Server: Started on port ${CONFIG.PORT}`);
     });
   });
-};
-
-type Config = {
-  JWT_PRIVATE_KEY: string;
 };
 
 if (require.main === module) {
