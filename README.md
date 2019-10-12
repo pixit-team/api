@@ -97,7 +97,8 @@ You can then run commands like `npm install ...` from the container.
 
 | Name | Description | Required | Default value |
 |------|-------------|----------|---------------|
-| `PORT` | The port on which the API will listen | `true` | `undefined` |
+| `PORT` | The port on which the API will listen | `true` | 5000 |
+| `JWT_PRIVATE_KEY` | The secret key used by JsonWebTokens | `true` | `undefined` |
 
 ### Database
 
@@ -108,16 +109,6 @@ You can use `DATABASE_URL`:
 | Name | Description | Required | Default value |
 |------|-------------|----------|---------------|
 | `DATABASE_URL` | The database url | `true` | `undefined` |
-
-Or you can specify each field individually:
-
-| Name | Description | Required | Default value |
-|------|-------------|----------|---------------|
-| `DB_HOST` | The database's hostname | `true` | `undefined` |
-| `DB_PORT` | The database's port | `true` | `undefined` |
-| `DB_NAME` | The database's name | `true` | `undefined` |
-| `DB_USER` | The database's username | `true` | `undefined` |
-| `DB_PASSWORD` | The database's password | `true` | `undefined` |
 
 ## Database Migrations
 
