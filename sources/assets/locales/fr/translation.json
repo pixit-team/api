@@ -5,9 +5,12 @@
   "req": {
     "auth": {
       "failed": "La connexion a échouée",
+      "invalidBearer": "Token de connexion invalide, le format attendu est \"Bearer\"",
+      "invalidToken": "Token invalide",
       "local": {
         "loggedIn": "Connexion réussie"
-      }
+      },
+      "required": "Authenfication nécessaire"
     },
     "user": {
       "created": "Utilisateur créé",

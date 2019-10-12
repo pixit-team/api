@@ -1,9 +1,9 @@
 import Koa from "koa";
 
-import { User } from "../models/schemas/UserSchema";
+import { UserDocument } from "../models/schemas/UserSchema";
 
 interface ApiContextState {
-  requestingUser?: User;
+  requestingUser?: UserDocument;
 }
 
 export type ApiContext = Koa.ParameterizedContext<ApiContextState>;

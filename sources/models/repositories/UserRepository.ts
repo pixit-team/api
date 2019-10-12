@@ -20,9 +20,22 @@ export default class UserRepository {
   };
 
   /**
+   * Find a specific User by its `id`
+   *
+   * @param id  The id of the User to look for
+   *
+   * @return  The corresponding User or `null`
+   */
+  public readonly findOneById = async (
+    id: string,
+  ): Promise<UserDocument | null> => {
+    return this.models.userModel.findById(id);
+  };
+
+  /**
    * Find a specific User using its `email`
    *
-   * @param email - The email of the User to look for
+   * @param email   The email of the User to look for
    *
    * @return  The corresponding User or `null`
    */

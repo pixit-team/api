@@ -5,9 +5,12 @@
   "req": {
     "auth": {
       "failed": "Failed to log in",
+      "invalidBearer": "Invalid token format, \"Bearer\" expected",
+      "invalidToken": "Invalid token",
       "local": {
         "loggedIn": "Login successful"
-      }
+      },
+      "required": "Auth required"
     },
     "user": {
       "created": "User created",
