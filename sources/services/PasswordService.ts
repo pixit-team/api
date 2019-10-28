@@ -1,4 +1,4 @@
-import Bcrypt from "bcrypt";
+import Bcrypt from "bcryptjs";
 
 /**
  * Simple utility allowing to cipher and match passwords

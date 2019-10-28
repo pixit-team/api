@@ -1,5 +1,6 @@
 import Koa from "koa";
 import KoaBodyParser from "koa-bodyparser";
+import cors from "@koa/cors";
 
 import BaseRouter from "../routers/BaseRouter";
 
@@ -12,6 +13,8 @@ export default class Server {
   constructor(routers: BaseRouter[]) {
     this.koaApp = new Koa();
     this.koaApp.use(KoaBodyParser());
+
+    this.koaApp.use(cors());
 
     // Add middlewares
     Server.loadMiddlwares(this.koaApp);

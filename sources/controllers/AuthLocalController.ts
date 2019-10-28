@@ -81,7 +81,7 @@ export default class AuthLocalController {
       userEmail,
     );
     if (!correspondingUser) {
-      ctx.throw(409, ctx.t("req.user.field.email.noMatch"));
+      ctx.throw(404, ctx.t("req.user.field.email.noMatch"));
       return;
     }
 
@@ -103,6 +103,7 @@ export default class AuthLocalController {
     ctx.status = 200;
     ctx.body = {
       message: ctx.t("req.auth.local.loggedIn"),
+      name: correspondingUser.name,
       token,
     };
   };
