@@ -33,7 +33,7 @@
         "koa-i18next": "^1.1.1",
         "koa-logger": "^3.2.1",
         "koa-router": "^7.4.0",
-        "mongoose": "^5.7.4",
+        "mongoose": "^5.7.5",
         "ts-node": "^8.4.1",
         "typescript": "^3.6.3"
     },
