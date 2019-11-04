@@ -13,6 +13,7 @@ import UserRepository from "./models/repositories/UserRepository";
 import Services from "./services";
 import JwtService from "./services/JwtService";
 import PasswordService from "./services/PasswordService";
+import SocketService from "./services/SocketService";
 // Validators
 import Validators from "./validators";
 import EmailValidator from "./validators/EmailValidator";
@@ -41,19 +42,19 @@ const createServer = (conn: Connection, config: Config): Server => {
   const repositories = new Repositories(new UserRepository(models));
 
   // Create Services
+  const jwtService = new JwtService(config.JWT_PRIVATE_KEY);
+  const socketService = new SocketService();
   const services = new Services(
-    new JwtService(config.JWT_PRIVATE_KEY),
+    jwtService,
     new PasswordService(),
+    socketService,
   );
 
   // Create Validators
-  const emailValidator = new EmailValidator();
-  const nameValidator = new NameValidator();
-  const passwordValidator = new PasswordValidator();
   const validators = new Validators(
-    emailValidator,
-    nameValidator,
-    passwordValidator,
+    new EmailValidator(),
+    new NameValidator(),
+    new PasswordValidator(),
   );
 
   // Create Views
@@ -79,7 +80,12 @@ const createServer = (conn: Connection, config: Config): Server => {
   ];
 
   // Create Server
-  return new Server(routers);
+  const server = new Server(routers);
+
+  // SocketService late initialization
+  socketService.deferredInit(server.getServer(), jwtService);
+
+  return server;
 };
 
 const main = (): void => {

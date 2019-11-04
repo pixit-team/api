@@ -25,6 +25,7 @@
     "no-console": ["error", {
       "allow": ["info", "warn", "error"]
     }],
+    "no-undef": "off",
     "no-underscore-dangle": "off",
     "object-curly-newline": "off",
     "operator-linebreak": "off",
