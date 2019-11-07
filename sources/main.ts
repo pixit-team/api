@@ -83,7 +83,7 @@ const createServer = (conn: Connection, config: Config): Server => {
   const server = new Server(routers);
 
   // SocketService late initialization
-  socketService.deferredInit(server.getServer(), jwtService);
+  socketService.deferredInit(server.getServer(), jwtService, repositories);
 
   return server;
 };
