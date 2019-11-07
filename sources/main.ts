@@ -4,10 +4,12 @@ import { createConnection, Connection } from "mongoose";
 import Controllers from "./controllers";
 import ApiEndpointController from "./controllers/ApiEndpointController";
 import AuthLocalController from "./controllers/AuthLocalController";
+import RoomController from "./controllers/RoomController";
 import UserController from "./controllers/UserController";
 // Repositories
 import Models from "./models/Models";
 import Repositories from "./models/repositories";
+import RoomRepository from "./models/repositories/RoomRepository";
 import UserRepository from "./models/repositories/UserRepository";
 // Services
 import Services from "./services";
@@ -26,6 +28,7 @@ import AuthenticatedOnlyMiddleware from "./middlewares/authenticatedOnlyMiddlewa
 import BaseRouter from "./routers/BaseRouter";
 import ApiEndpointRouter from "./routers/ApiEndpointRouter";
 import AuthLocalRouter from "./routers/AuthLocalRouter";
+import RoomRouter from "./routers/RoomRouter";
 import UserRouter from "./routers/UserRouter";
 // Views
 import Views from "./views";
@@ -39,7 +42,10 @@ const createServer = (conn: Connection, config: Config): Server => {
   const models = new Models(conn);
 
   // Create Repositories
-  const repositories = new Repositories(new UserRepository(models));
+  const repositories = new Repositories(
+    new RoomRepository(models),
+    new UserRepository(models),
+  );
 
   // Create Services
   const jwtService = new JwtService(config.JWT_PRIVATE_KEY);
@@ -69,6 +75,7 @@ const createServer = (conn: Connection, config: Config): Server => {
   const controllers = new Controllers(
     new ApiEndpointController(),
     new AuthLocalController(repositories, services, validators),
+    new RoomController(repositories),
     new UserController(views),
   );
 
@@ -76,6 +83,7 @@ const createServer = (conn: Connection, config: Config): Server => {
   const routers: BaseRouter[] = [
     new ApiEndpointRouter(controllers),
     new AuthLocalRouter(controllers),
+    new RoomRouter(controllers),
     new UserRouter(controllers, middlewares),
   ];
 

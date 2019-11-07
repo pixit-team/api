@@ -1,5 +1,6 @@
 import Models from "../Models";
-import { User, UserDocument } from "../schemas/UserSchema";
+import { UserDocument } from "../schemas/UserSchema";
+import User from "../../core/types/User";
 
 export default class UserRepository {
   private readonly models: Models;

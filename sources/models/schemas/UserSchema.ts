@@ -1,10 +1,6 @@
 import { Connection, Document, Model, Schema } from "mongoose";
 
-export interface User {
-  email: string;
-  name: string;
-  cipheredPassword: string;
-}
+import User from "../../core/types/User";
 
 export type UserDocument = User & Document;
 

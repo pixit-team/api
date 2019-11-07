@@ -12,6 +12,13 @@
       },
       "required": "Authenfication nécessaire"
     },
+    "room": {
+      "field": {
+        "name": {
+          "missing": "Champ \"name\" manquant"
+        }
+      }
+    },
     "user": {
       "created": "Utilisateur créé",
       "field": {

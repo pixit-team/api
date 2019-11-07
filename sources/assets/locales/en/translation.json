@@ -12,6 +12,13 @@
       },
       "required": "Auth required"
     },
+    "room": {
+      "field": {
+        "name": {
+          "missing": "Missing \"name\""
+        }
+      }
+    },
     "user": {
       "created": "User created",
       "field": {
