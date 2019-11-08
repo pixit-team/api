@@ -39,6 +39,7 @@ import RoomView from "./views/RoomView";
 // modules
 import loadConfig, { Config } from "./config";
 import Server from "./server";
+import socketHandler from "./socketHandler";
 
 const createServer = (conn: Connection, config: Config): Server => {
   // Models
@@ -95,8 +96,11 @@ const createServer = (conn: Connection, config: Config): Server => {
   // Create Server
   const server = new Server(routers);
 
-  // SocketService late initialization
-  socketService.deferredInit(server.getServer(), jwtService, repositories);
+  // SocketService's deferred initialization
+  socketService.deferredInit(
+    server.getServer(),
+    socketHandler(repositories, services),
+  );
 
   return server;
 };

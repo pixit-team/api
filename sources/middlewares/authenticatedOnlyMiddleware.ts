@@ -1,3 +1,4 @@
+import TokenPayload from "../core/types/TokenPayload";
 import { ApiContext } from "../server/contexts/ApiContext";
 import Repositories from "../models/repositories";
 import Services from "../services";
@@ -23,7 +24,7 @@ export default (repositories: Repositories, services: Services) => async (
 
   // Parse token
   const token = authorization.substring(BEARER.length);
-  const payload = services.jwtService.decode(token) as { id: string };
+  const payload = services.jwtService.decode<TokenPayload>(token);
   if (!payload || !payload.id) {
     ctx.throw(401, ctx.t("req.auth.invalidToken"));
     return;

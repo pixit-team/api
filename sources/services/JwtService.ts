@@ -7,16 +7,16 @@ export default class JwtService {
     this.privateKey = privateKey;
   }
 
-  public readonly tokenize = (data: object): string => {
+  public tokenize<TData>(data: TData): string {
     return Jwt.sign({ data }, this.privateKey);
-  };
+  }
 
-  public readonly decode = (token: string): object | undefined => {
+  public decode<TData>(token: string): TData | undefined {
     try {
-      const { data } = Jwt.verify(token, this.privateKey) as { data: object };
+      const { data } = Jwt.verify(token, this.privateKey) as { data: TData };
       return data;
     } catch (e) {
       return undefined;
     }
-  };
+  }
 }

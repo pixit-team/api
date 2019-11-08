@@ -1,6 +1,7 @@
+import TokenPayload from "../core/types/TokenPayload";
 import { ApiContext } from "../server/contexts/ApiContext";
-import Repositories from "../models/repositories";
 import Services from "../services";
+import Repositories from "../models/repositories";
 import Validators from "../validators";
 
 export default class AuthLocalController {
@@ -96,7 +97,7 @@ export default class AuthLocalController {
     }
 
     // Create a new access token
-    const token = this.services.jwtService.tokenize({
+    const token = this.services.jwtService.tokenize<TokenPayload>({
       id: correspondingUser._id,
     });
 

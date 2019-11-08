@@ -7,7 +7,7 @@ export default (app: Koa): void => {
   i18next.use(i18nextSyncBackend).init({
     initImmediate: false, // Wait for loading to be completed before returning
     backend: {
-      loadPath: `${__dirname}/../assets/locales/{{lng}}/{{ns}}.json`,
+      loadPath: `${__dirname}/../../assets/locales/{{lng}}/{{ns}}.json`,
     },
     preload: ["en", "fr"],
     fallbackLng: "en",
