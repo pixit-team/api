@@ -21,7 +21,8 @@
           "missing": "Missing \"uuid\""
         }
       },
-      "notFound": "Room not found"
+      "notFound": "Room not found",
+      "unauthorized": "User not in room"
     },
     "user": {
       "created": "User created",

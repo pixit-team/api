@@ -24,6 +24,8 @@ import PasswordValidator from "./validators/PasswordValidator";
 // Middlewares
 import Middlewares from "./middlewares";
 import AuthenticatedOnlyMiddleware from "./middlewares/authenticatedOnlyMiddleware";
+import RoomExistsMiddleware from "./middlewares/roomExistsMiddleware";
+import UserInRoomMiddleware from "./middlewares/userInRoomMiddleware";
 // Routers
 import BaseRouter from "./routers/BaseRouter";
 import ApiEndpointRouter from "./routers/ApiEndpointRouter";
@@ -68,9 +70,11 @@ const createServer = (conn: Connection, config: Config): Server => {
   const views = new Views(new UserView(), new RoomView());
 
   // Create Middlewares
-  const middlewares = new Middlewares(
-    AuthenticatedOnlyMiddleware(repositories, services),
-  );
+  const middlewares: Middlewares = {
+    authenticatedOnly: AuthenticatedOnlyMiddleware(repositories, services),
+    roomExists: RoomExistsMiddleware(repositories),
+    userInRoom: UserInRoomMiddleware(),
+  };
 
   // Create Controllers
   const controllers = new Controllers(

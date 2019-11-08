@@ -2,6 +2,7 @@ import Models from "../Models";
 import { RoomDocument } from "../schemas/RoomSchema";
 import Room from "../../core/types/Room";
 import RoomMember from "../../core/types/RoomMember";
+import PlaylistItem from "../../core/types/PlaylistItem";
 
 export default class RoomRepository {
   private readonly models: Models;
@@ -53,6 +54,19 @@ export default class RoomRepository {
     roomMember: RoomMember,
   ): Promise<void> => {
     room.members.push(roomMember);
+    await room.save();
+  };
+
+  /**
+   * @param room The room where to add the playlistItem
+   * @param playlistItem The playlistItem to add in the playlist
+   * Add a user to a room
+   */
+  public readonly addMusic = async (
+    room: RoomDocument,
+    playlistItem: PlaylistItem,
+  ): Promise<void> => {
+    room.playlist.nextItems.push(playlistItem);
     await room.save();
   };
 }

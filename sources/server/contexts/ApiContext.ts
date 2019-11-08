@@ -1,6 +1,6 @@
 import Koa from "koa";
 
-import { UserDocument } from "../models/schemas/UserSchema";
+import { UserDocument } from "../../models/schemas/UserSchema";
 
 interface ApiContextState {
   requestingUser: UserDocument;

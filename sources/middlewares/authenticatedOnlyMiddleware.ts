@@ -1,4 +1,4 @@
-import { ApiContext } from "../utils/ApiContext";
+import { ApiContext } from "../server/contexts/ApiContext";
 import Repositories from "../models/repositories";
 import Services from "../services";
 

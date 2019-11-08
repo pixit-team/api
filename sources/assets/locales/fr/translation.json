@@ -21,7 +21,8 @@
           "missing": "Champ \"uuid\" manquant"
         }
       },
-      "notFound": "Room non trouvé"
+      "notFound": "Room non trouvé",
+      "unauthorized": "L'Utilisateur n'est pas dans la room"
     },
     "user": {
       "created": "Utilisateur créé",

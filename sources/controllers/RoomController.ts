@@ -1,7 +1,8 @@
 import Uuid from "uuid/v4";
 
 import Repositories from "../models/repositories";
-import { ApiContext } from "../utils/ApiContext";
+import { ApiContext } from "../server/contexts/ApiContext";
+import { ApiRoomContext } from "../server/contexts/ApiRoomContext";
 import Room from "../core/types/Room";
 import Views from "../views";
 
@@ -93,6 +94,25 @@ export default class RoomController {
     ctx.body = {
       message: "OK",
       room: this.views.roomView.formatPrivateRoom(room),
+    };
+  };
+
+  public readonly musicAdd = async (ctx: ApiRoomContext): Promise<void> => {
+    const videoId: string =
+      ctx.request.body.video_id ||
+      ctx.throw(400, ctx.t("req.room.musicAdd.videoId.missing"));
+
+    await this.repositories.roomRepository.addMusic(ctx.state.room, {
+      videoId,
+      uuid: Uuid(),
+      addedBy: ctx.state.requestingUser._id,
+    });
+
+    // TODO SERVER_BROADCAST: “music_add” -> {PlaylistItem}
+
+    ctx.status = 200;
+    ctx.body = {
+      message: "OK",
     };
   };
 }

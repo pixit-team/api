@@ -1,4 +1,4 @@
-import { ApiContext } from "../utils/ApiContext";
+import { ApiContext } from "../server/contexts/ApiContext";
 
 export default class ApiEndpointController {
   public readonly endpoint = async (ctx: ApiContext): Promise<void> => {

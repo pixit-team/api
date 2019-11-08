@@ -24,5 +24,12 @@ export default class RoomRouter extends BaseRouter {
       middlewares.authenticatedOnly,
       controllers.roomController.joinRoom,
     );
+    this.router.post(
+      "/:uuid/music-add",
+      middlewares.authenticatedOnly,
+      middlewares.roomExists,
+      middlewares.userInRoom,
+      controllers.roomController.musicAdd,
+    );
   }
 }
