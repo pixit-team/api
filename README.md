@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/melosync/api.svg?branch=master)](https://travis-ci.org/melosync/api)
 
+[Docs](https://melosync.github.io/api/)
+
 ## Table of content
 
 <!-- The section between the `toc` tags is automatically generated with `npm run readme:update` -->
