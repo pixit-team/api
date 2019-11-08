@@ -16,8 +16,12 @@
       "field": {
         "name": {
           "missing": "Missing \"name\""
+        },
+        "uuid": {
+          "missing": "Missing \"uuid\""
         }
-      }
+      },
+      "notFound": "Room not found"
     },
     "user": {
       "created": "User created",

@@ -1,6 +1,7 @@
 import Models from "../Models";
 import { RoomDocument } from "../schemas/RoomSchema";
 import Room from "../../core/types/Room";
+import RoomMember from "../../core/types/RoomMember";
 
 export default class RoomRepository {
   private readonly models: Models;
@@ -23,7 +24,7 @@ export default class RoomRepository {
   /**
    * Find a specific Room using its `uuid`
    *
-   * @param uuid   The uuid of the Room to look for
+   * @param uuid The uuid of the Room to look for
    *
    * @return  The corresponding Room or `null`
    */
@@ -40,5 +41,18 @@ export default class RoomRepository {
    */
   public readonly getAll = async (): Promise<Room[]> => {
     return this.models.roomModel.find().exec();
+  };
+
+  /**
+   * @param uuid The uuid of the Room
+   * @param roomMember The roomMember to add to the room
+   * Add a user to a room
+   */
+  public readonly addUser = async (
+    room: RoomDocument,
+    roomMember: RoomMember,
+  ): Promise<void> => {
+    room.members.push(roomMember);
+    await room.save();
   };
 }

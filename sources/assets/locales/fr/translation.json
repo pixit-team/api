@@ -16,8 +16,12 @@
       "field": {
         "name": {
           "missing": "Champ \"name\" manquant"
+        },
+        "uuid": {
+          "missing": "Champ \"uuid\" manquant"
         }
-      }
+      },
+      "notFound": "Room non trouvé"
     },
     "user": {
       "created": "Utilisateur créé",

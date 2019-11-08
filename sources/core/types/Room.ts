@@ -1,9 +1,17 @@
-import User from "./User";
 import PlaylistItem from "./PlaylistItem";
+import RoomMember from "./RoomMember";
 
 export default interface Room {
   uuid: string;
   name: string;
-  users: User[];
-  playlist: PlaylistItem[];
+  members: RoomMember[];
+  playlist: {
+    current?: {
+      item: PlaylistItem;
+      playingSince: Date;
+      musicOffset: number; // in milliseconds
+    };
+    nextItems: PlaylistItem[];
+    isPlaying: boolean;
+  };
 }

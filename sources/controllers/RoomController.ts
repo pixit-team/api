@@ -3,12 +3,16 @@ import Uuid from "uuid/v4";
 import Repositories from "../models/repositories";
 import { ApiContext } from "../utils/ApiContext";
 import Room from "../core/types/Room";
+import Views from "../views";
 
 export default class RoomController {
   private readonly repositories: Repositories;
 
-  constructor(repositories: Repositories) {
+  private readonly views: Views;
+
+  constructor(repositories: Repositories, views: Views) {
     this.repositories = repositories;
+    this.views = views;
   }
 
   public readonly createRoom = async (ctx: ApiContext): Promise<void> => {
@@ -19,14 +23,20 @@ export default class RoomController {
     const room: Room = {
       uuid: Uuid(),
       name: roomName,
-      users: [],
-      playlist: [],
+      members: [],
+      playlist: {
+        current: undefined,
+        nextItems: [],
+        isPlaying: false,
+      },
     };
+
     this.repositories.roomRepository.create(room);
 
     ctx.status = 200;
     ctx.body = {
       message: "OK",
+      room,
     };
   };
 
@@ -37,6 +47,52 @@ export default class RoomController {
     ctx.body = {
       message: "OK",
       rooms,
+    };
+  };
+
+  public readonly getRoom = async (ctx: ApiContext): Promise<void> => {
+    const roomUuid: string =
+      ctx.params.uuid || ctx.throw(400, ctx.t("req.room.field.uuid.missing"));
+
+    const room = await this.repositories.roomRepository.findOneByUuid(roomUuid);
+
+    if (!room) {
+      ctx.throw(404, ctx.t("req.room.notFound"));
+      return;
+    }
+
+    ctx.status = 200;
+    ctx.body = {
+      message: "OK",
+      room: this.views.roomView.formatPrivateRoom(room),
+    };
+  };
+
+  public readonly joinRoom = async (ctx: ApiContext): Promise<void> => {
+    const { requestingUser } = ctx.state;
+
+    const roomUuid: string =
+      ctx.params.uuid || ctx.throw(400, ctx.t("req.room.field.uuid.missing"));
+
+    const room = await this.repositories.roomRepository.findOneByUuid(roomUuid);
+    if (!room) {
+      ctx.throw(404, ctx.t("req.room.notFound"));
+      return;
+    }
+
+    // We add the user only if he isn't there
+    if (room.members.findIndex(u => requestingUser._id.equals(u.id)) === -1) {
+      await this.repositories.roomRepository.addUser(room, {
+        id: requestingUser._id,
+        name: requestingUser.name,
+        isConnected: true,
+      });
+    }
+
+    ctx.status = 200;
+    ctx.body = {
+      message: "OK",
+      room: this.views.roomView.formatPrivateRoom(room),
     };
   };
 }

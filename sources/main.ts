@@ -33,6 +33,7 @@ import UserRouter from "./routers/UserRouter";
 // Views
 import Views from "./views";
 import UserView from "./views/UserView";
+import RoomView from "./views/RoomView";
 // modules
 import loadConfig, { Config } from "./config";
 import Server from "./server";
@@ -64,7 +65,7 @@ const createServer = (conn: Connection, config: Config): Server => {
   );
 
   // Create Views
-  const views = new Views(new UserView());
+  const views = new Views(new UserView(), new RoomView());
 
   // Create Middlewares
   const middlewares = new Middlewares(
@@ -75,7 +76,7 @@ const createServer = (conn: Connection, config: Config): Server => {
   const controllers = new Controllers(
     new ApiEndpointController(),
     new AuthLocalController(repositories, services, validators),
-    new RoomController(repositories),
+    new RoomController(repositories, views),
     new UserController(views),
   );
 
@@ -83,7 +84,7 @@ const createServer = (conn: Connection, config: Config): Server => {
   const routers: BaseRouter[] = [
     new ApiEndpointRouter(controllers),
     new AuthLocalRouter(controllers),
-    new RoomRouter(controllers),
+    new RoomRouter(controllers, middlewares),
     new UserRouter(controllers, middlewares),
   ];
 

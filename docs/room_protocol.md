@@ -10,7 +10,7 @@ interface RoomMember {
 
 ```ts
 interface PlaylistItem {
-    id: string;
+    videoId: string;
     uuid: string;
     addedBy: ObjectId; // id of the User that added it
 
