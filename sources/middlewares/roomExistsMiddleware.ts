@@ -1,13 +1,16 @@
 import Repositories from "../models/repositories";
-import { ApiRoomContext } from "../server/contexts/ApiRoomContext";
+import ApiRoomContext from "../server/contexts/ApiRoomContext";
 
 export default (repositories: Repositories) => async (
   ctx: ApiRoomContext,
   next: () => Promise<void>,
 ): Promise<void> => {
   // Get room uuid from params
-  const roomUuid: string =
-    ctx.params.uuid || ctx.throw(400, ctx.t("req.room.field.uuid.missing"));
+  const { roomUuid } = ctx.params;
+  if (!roomUuid) {
+    ctx.throw(400, ctx.t("req.room.field.uuid.missing"));
+    return;
+  }
 
   // Make sure the room exists
   const room = await repositories.roomRepository.findOneByUuid(roomUuid);

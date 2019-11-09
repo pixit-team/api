@@ -1,8 +1,9 @@
 import TokenPayload from "../core/types/TokenPayload";
-import { ApiContext } from "../server/contexts/ApiContext";
-import Services from "../services";
 import Repositories from "../models/repositories";
+import ApiContext from "../server/contexts/ApiContext";
+import Services from "../services";
 import Validators from "../validators";
+import Views from "../views/index";
 
 export default class AuthLocalController {
   private readonly repositories: Repositories;
@@ -11,14 +12,18 @@ export default class AuthLocalController {
 
   private readonly validators: Validators;
 
+  private readonly views: Views;
+
   constructor(
     repositories: Repositories,
     services: Services,
     validators: Validators,
+    views: Views,
   ) {
     this.repositories = repositories;
     this.services = services;
     this.validators = validators;
+    this.views = views;
   }
 
   public readonly register = async (ctx: ApiContext): Promise<void> => {
@@ -104,7 +109,7 @@ export default class AuthLocalController {
     ctx.status = 200;
     ctx.body = {
       message: ctx.t("req.auth.local.loggedIn"),
-      name: correspondingUser.name,
+      user: this.views.userView.formatPrivateUser(correspondingUser),
       token,
     };
   };

@@ -1,9 +1,9 @@
 import Uuid from "uuid/v4";
 
+import { isRoomMember } from "../core/types/Room";
 import Repositories from "../models/repositories";
-import { ApiContext } from "../server/contexts/ApiContext";
-import { ApiRoomContext } from "../server/contexts/ApiRoomContext";
-import Room from "../core/types/Room";
+import ApiContext from "../server/contexts/ApiContext";
+import ApiRoomContext from "../server/contexts/ApiRoomContext";
 import Views from "../views";
 
 export default class RoomController {
@@ -17,30 +17,26 @@ export default class RoomController {
   }
 
   public readonly createRoom = async (ctx: ApiContext): Promise<void> => {
-    const roomName: string =
-      ctx.request.body.name ||
-      ctx.throw(400, ctx.t("req.room.field.name.missing"));
-
-    const room: Room = {
+    // Create new Room
+    const createdRoom = await this.repositories.roomRepository.create({
       uuid: Uuid(),
-      name: roomName,
+      name: ctx.t("room.field.name.default"),
       members: [],
       playlist: {
         current: undefined,
         nextItems: [],
         isPlaying: false,
       },
-    };
-
-    this.repositories.roomRepository.create(room);
+    });
 
     ctx.status = 200;
     ctx.body = {
       message: "OK",
-      room,
+      room: this.views.roomView.formatRoom(createdRoom),
     };
   };
 
+  // TODO: REMOVE (here for debug purpose)
   public readonly getRooms = async (ctx: ApiContext): Promise<void> => {
     const rooms = await this.repositories.roomRepository.getAll();
 
@@ -51,49 +47,23 @@ export default class RoomController {
     };
   };
 
-  public readonly getRoom = async (ctx: ApiContext): Promise<void> => {
-    const roomUuid: string =
-      ctx.params.uuid || ctx.throw(400, ctx.t("req.room.field.uuid.missing"));
+  public readonly joinRoom = async (ctx: ApiRoomContext): Promise<void> => {
+    const { requestingUser, room } = ctx.state;
 
-    const room = await this.repositories.roomRepository.findOneByUuid(roomUuid);
-
-    if (!room) {
-      ctx.throw(404, ctx.t("req.room.notFound"));
-      return;
-    }
-
-    ctx.status = 200;
-    ctx.body = {
-      message: "OK",
-      room: this.views.roomView.formatPrivateRoom(room),
-    };
-  };
-
-  public readonly joinRoom = async (ctx: ApiContext): Promise<void> => {
-    const { requestingUser } = ctx.state;
-
-    const roomUuid: string =
-      ctx.params.uuid || ctx.throw(400, ctx.t("req.room.field.uuid.missing"));
-
-    const room = await this.repositories.roomRepository.findOneByUuid(roomUuid);
-    if (!room) {
-      ctx.throw(404, ctx.t("req.room.notFound"));
-      return;
-    }
-
-    // We add the user only if he isn't there
-    if (room.members.findIndex(u => requestingUser._id.equals(u.id)) === -1) {
-      await this.repositories.roomRepository.addUser(room, {
+    // If the User is not already part of the Room, we add him in
+    let updatedRoom = room;
+    if (!isRoomMember(room, requestingUser._id)) {
+      updatedRoom = await this.repositories.roomRepository.addUser(room, {
         id: requestingUser._id,
         name: requestingUser.name,
-        isConnected: true,
+        isConnected: false,
       });
     }
 
     ctx.status = 200;
     ctx.body = {
       message: "OK",
-      room: this.views.roomView.formatPrivateRoom(room),
+      room: this.views.roomView.formatRoom(updatedRoom),
     };
   };
 

@@ -1,3 +1,5 @@
+import { ObjectId } from "bson";
+
 import PlaylistItem from "./PlaylistItem";
 import RoomMember from "./RoomMember";
 
@@ -15,3 +17,7 @@ export default interface Room {
     isPlaying: boolean;
   };
 }
+
+export const isRoomMember = (room: Room, memberId: ObjectId): boolean => {
+  return !!room.members.find(m => m.id.equals(memberId));
+};

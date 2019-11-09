@@ -1,4 +1,5 @@
-import { ApiRoomContext } from "../server/contexts/ApiRoomContext";
+import { isRoomMember } from "../core/types/Room";
+import ApiRoomContext from "../server/contexts/ApiRoomContext";
 
 export default () => async (
   ctx: ApiRoomContext,
@@ -6,8 +7,8 @@ export default () => async (
 ): Promise<void> => {
   const { requestingUser, room } = ctx.state;
 
-  if (room.members.findIndex(u => requestingUser._id.equals(u.id)) === -1) {
-    ctx.throw(404, ctx.t("req.room.unauthorized"));
+  if (!isRoomMember(room, requestingUser._id)) {
+    ctx.throw(403, ctx.t("req.room.forbidden"));
     return;
   }
 

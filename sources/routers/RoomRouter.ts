@@ -9,23 +9,21 @@ export default class RoomRouter extends BaseRouter {
 
     this.router.get("/", controllers.roomController.getRooms); // Keep it for debug  // TODO Remove
 
-    this.router.get(
-      "/:uuid",
-      middlewares.authenticatedOnly,
-      controllers.roomController.getRoom,
-    );
     this.router.post(
       "/",
       middlewares.authenticatedOnly,
       controllers.roomController.createRoom,
     );
+
     this.router.post(
-      "/:uuid/join",
+      "/:roomUuid/join",
       middlewares.authenticatedOnly,
+      middlewares.roomExists,
       controllers.roomController.joinRoom,
     );
+
     this.router.post(
-      "/:uuid/music-add",
+      "/:roomUuid/music-add",
       middlewares.authenticatedOnly,
       middlewares.roomExists,
       middlewares.userInRoom,

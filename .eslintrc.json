@@ -16,24 +16,19 @@
     "jest": true
   },
   "rules": {
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/semi": ["error"],
     "arrow-body-style": "off",
     "arrow-parens": "off",
     "linebreak-style": "off",
-    "import/order": ["error", {
-      "newlines-between": "always"
-    }],
-    "no-console": ["error", {
-      "allow": ["info", "warn", "error"]
-    }],
+    "import/order": ["error", { "newlines-between": "always" }],
+    "no-console": ["error", { "allow": ["info", "warn", "error"] }],
     "no-undef": "off",
     "no-underscore-dangle": "off",
     "object-curly-newline": "off",
     "operator-linebreak": "off",
-    "quotes": ["error", "double", {
-      "avoidEscape": true
-    }],
-    "semi": "off",
-    "@typescript-eslint/semi": ["error"]
+    "quotes": ["error", "double", { "avoidEscape": true }],
+    "semi": "off"
   },
   "settings": {
     "import/resolver": {

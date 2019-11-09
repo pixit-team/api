@@ -6,4 +6,5 @@ interface ApiContextState {
   requestingUser: UserDocument;
 }
 
-export type ApiContext = Koa.ParameterizedContext<ApiContextState>;
+type ApiContext = Koa.ParameterizedContext<ApiContextState>;
+export default ApiContext;

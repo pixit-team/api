@@ -3,9 +3,16 @@ import { ObjectId } from "bson";
 
 import Room from "../../core/types/Room";
 
-export type RoomDocument = Room & Document;
+const SECOND = 1;
+const HOUR = 3600 * SECOND;
+const ROOM_LIFESPAN = 12 * HOUR;
 
 const RoomSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   uuid: {
     type: String,
     required: true,
@@ -13,11 +20,6 @@ const RoomSchema = new Schema({
     lowercase: true,
     trim: true,
     index: true,
-  },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
   },
   members: {
     type: Array,
@@ -52,8 +54,19 @@ const RoomSchema = new Schema({
       type: Array,
       required: true,
     },
+    isPlaying: {
+      type: Boolean,
+      required: true,
+    },
   }),
+  createdAt: {
+    type: Date,
+    expires: ROOM_LIFESPAN,
+    default: Date.now,
+  },
 });
+
+export type RoomDocument = Room & Document;
 
 export function registerRoomModel(conn: Connection): Model<RoomDocument> {
   return conn.model<RoomDocument>("Room", RoomSchema);

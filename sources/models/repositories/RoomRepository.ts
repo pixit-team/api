@@ -52,9 +52,9 @@ export default class RoomRepository {
   public readonly addUser = async (
     room: RoomDocument,
     roomMember: RoomMember,
-  ): Promise<void> => {
+  ): Promise<RoomDocument> => {
     room.members.push(roomMember);
-    await room.save();
+    return room.save();
   };
 
   /**

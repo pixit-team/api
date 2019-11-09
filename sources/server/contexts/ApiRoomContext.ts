@@ -8,4 +8,5 @@ interface ApiRoomContextState {
   room: RoomDocument;
 }
 
-export type ApiRoomContext = Koa.ParameterizedContext<ApiRoomContextState>;
+type ApiRoomContext = Koa.ParameterizedContext<ApiRoomContextState>;
+export default ApiRoomContext;

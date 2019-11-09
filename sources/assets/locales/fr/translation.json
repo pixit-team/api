@@ -14,15 +14,17 @@
     },
     "room": {
       "field": {
-        "name": {
-          "missing": "Champ \"name\" manquant"
-        },
         "uuid": {
           "missing": "Champ \"uuid\" manquant"
         }
       },
-      "notFound": "Room non trouvé",
-      "unauthorized": "L'Utilisateur n'est pas dans la room"
+      "forbidden": "Vous ne pouvez pas accéder à cette salle",
+      "musicAdd": {
+        "videoId": {
+          "missing": "Champ \"video_id\" manquant"
+        }
+      },
+      "notFound": "Room non trouvé"
     },
     "user": {
       "created": "Utilisateur créé",
@@ -41,6 +43,13 @@
           "invalid": "Le mot de passe doit faire au moins 8 charactères et contenir des majuscules, minuscules, chiffres et charactères spéciaux",
           "missing": "Champ \"password\" manquant"
         }
+      }
+    }
+  },
+  "room": {
+    "field": {
+      "name": {
+        "default": "Salle de musique"
       }
     }
   }

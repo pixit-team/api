@@ -14,15 +14,17 @@
     },
     "room": {
       "field": {
-        "name": {
-          "missing": "Missing \"name\""
-        },
         "uuid": {
           "missing": "Missing \"uuid\""
         }
       },
-      "notFound": "Room not found",
-      "unauthorized": "User not in room"
+      "forbidden": "You cannot access this Room",
+      "musicAdd": {
+        "videoId": {
+          "missing": "Missing \"video_id\""
+        }
+      },
+      "notFound": "Room not found"
     },
     "user": {
       "created": "User created",
@@ -41,6 +43,13 @@
           "invalid": "Password must contain digits, symbols, lowercase and uppercase letters and be at least 8 characters long",
           "missing": "Missing \"password\""
         }
+      }
+    }
+  },
+  "room": {
+    "field": {
+      "name": {
+        "default": "Music room"
       }
     }
   }

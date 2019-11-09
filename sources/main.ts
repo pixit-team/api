@@ -46,10 +46,10 @@ const createServer = (conn: Connection, config: Config): Server => {
   const models = new Models(conn);
 
   // Create Repositories
-  const repositories = new Repositories(
-    new RoomRepository(models),
-    new UserRepository(models),
-  );
+  const repositories: Repositories = {
+    roomRepository: new RoomRepository(models),
+    userRepository: new UserRepository(models),
+  };
 
   // Create Services
   const jwtService = new JwtService(config.JWT_PRIVATE_KEY);
@@ -68,7 +68,10 @@ const createServer = (conn: Connection, config: Config): Server => {
   );
 
   // Create Views
-  const views = new Views(new UserView(), new RoomView());
+  const views: Views = {
+    userView: new UserView(),
+    roomView: new RoomView(),
+  };
 
   // Create Middlewares
   const middlewares: Middlewares = {
@@ -78,12 +81,17 @@ const createServer = (conn: Connection, config: Config): Server => {
   };
 
   // Create Controllers
-  const controllers = new Controllers(
-    new ApiEndpointController(),
-    new AuthLocalController(repositories, services, validators),
-    new RoomController(repositories, views),
-    new UserController(views),
-  );
+  const controllers: Controllers = {
+    apiEndpointController: new ApiEndpointController(),
+    authLocalController: new AuthLocalController(
+      repositories,
+      services,
+      validators,
+      views,
+    ),
+    roomController: new RoomController(repositories, views),
+    userController: new UserController(views),
+  };
 
   // Create Routers
   const routers: BaseRouter[] = [

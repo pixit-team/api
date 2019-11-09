@@ -1,4 +1,4 @@
-import { ApiContext } from "../server/contexts/ApiContext";
+import ApiContext from "../server/contexts/ApiContext";
 import Views from "../views";
 
 export default class UserController {

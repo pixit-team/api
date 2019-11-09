@@ -1,5 +1,5 @@
-import { ApiContext } from "../server/contexts/ApiContext";
-import { ApiRoomContext } from "../server/contexts/ApiRoomContext";
+import ApiContext from "../server/contexts/ApiContext";
+import ApiRoomContext from "../server/contexts/ApiRoomContext";
 
 type Middleware<T> = (ctx: T, next: () => Promise<void>) => Promise<void>;
 

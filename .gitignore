@@ -64,3 +64,6 @@ jspm_packages/
 
 # MISC
 .DS_Store
+
+# i18next
+*_old.json
