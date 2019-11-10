@@ -36,7 +36,8 @@ export default (repositories: Repositories, services: Services) => (
 
         // The authentication is a success
         // Register socket with Room and add listeners
-        socket.join(payload.roomUuid);
+        socket.join(room.uuid);
+        console.info(`Connected to room: ${room.uuid}, ${decodedToken.id}`);
 
         // TODO: update status in room and broadcast "user_join"
 
