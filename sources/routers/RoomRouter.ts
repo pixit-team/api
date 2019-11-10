@@ -29,5 +29,29 @@ export default class RoomRouter extends BaseRouter {
       middlewares.userInRoom,
       controllers.roomController.musicAdd,
     );
+
+    this.router.post(
+      "/:roomUuid/music-play",
+      middlewares.authenticatedOnly,
+      middlewares.roomExists,
+      middlewares.userInRoom,
+      controllers.roomController.musicPlay,
+    );
+
+    this.router.post(
+      "/:roomUuid/music-pause",
+      middlewares.authenticatedOnly,
+      middlewares.roomExists,
+      middlewares.userInRoom,
+      controllers.roomController.musicPause,
+    );
+
+    this.router.post(
+      "/:roomUuid/music-next",
+      middlewares.authenticatedOnly,
+      middlewares.roomExists,
+      middlewares.userInRoom,
+      controllers.roomController.musicNext,
+    );
   }
 }

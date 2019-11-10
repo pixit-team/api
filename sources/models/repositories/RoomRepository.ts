@@ -1,6 +1,5 @@
 import { ObjectId } from "bson";
 
-import PlaylistItem from "../../core/types/PlaylistItem";
 import Room from "../../core/types/Room";
 import RoomMember from "../../core/types/RoomMember";
 import Models from "../Models";
@@ -92,16 +91,13 @@ export default class RoomRepository {
   };
 
   /**
-   * Add a Music to a Room
+   * Save the new Room state
    *
-   * @param room The Room
-   * @param playlistItem The playlistItem to add in the playlist
+   * @param room The Room to save
    */
-  public readonly addMusic = async (
+  public readonly saveRoom = async (
     room: RoomDocument,
-    playlistItem: PlaylistItem,
-  ): Promise<void> => {
-    room.playlist.items.push(playlistItem);
-    await room.save();
+  ): Promise<RoomDocument> => {
+    return room.save();
   };
 }

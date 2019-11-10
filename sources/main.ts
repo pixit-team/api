@@ -89,7 +89,7 @@ const createServer = (conn: Connection, config: Config): Server => {
       validators,
       views,
     ),
-    roomController: new RoomController(repositories, views),
+    roomController: new RoomController(repositories, services, views),
     userController: new UserController(views),
   };
 
