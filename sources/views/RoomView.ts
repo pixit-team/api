@@ -14,7 +14,7 @@ export default class RoomView {
       playlist: {
         items: room.playlist.items.map(RoomView.formatPlaylistItem),
         isPlaying: room.playlist.isPlaying,
-        playingSince: room.playlist.playingSince,
+        playingSince: room.playlist.playingSince.toISOString(),
         musicOffset: room.playlist.musicOffset,
       },
     };

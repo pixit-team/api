@@ -180,12 +180,17 @@ export default class RoomController {
   public readonly musicPause = async (ctx: ApiRoomContext): Promise<void> => {
     const { room } = ctx.state;
 
+    // Validate request's parameters
+    const musicUuid: string =
+      ctx.request.body.uuid ||
+      ctx.throw(400, ctx.t("req.room.musicNext.uuid.missing"));
+
     if (room.playlist.items.length === 0) {
       ctx.throw(400, "req.room.musicPause.empty");
       return;
     }
 
-    if (room.playlist.isPlaying) {
+    if (room.playlist.isPlaying && room.playlist.items[0].uuid === musicUuid) {
       // Update Playlist state
       const now = new Date();
       const newOffset = now.getTime() - room.playlist.playingSince.getTime();
