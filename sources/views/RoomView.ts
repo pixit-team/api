@@ -12,24 +12,11 @@ export default class RoomView {
         isConnected: m.isConnected,
       })),
       playlist: {
-        current: RoomView.formatPlaylistCurrent(room.playlist.current),
-        nextItems: room.playlist.nextItems.map(RoomView.formatPlaylistItem),
+        items: room.playlist.items.map(RoomView.formatPlaylistItem),
         isPlaying: room.playlist.isPlaying,
+        playingSince: room.playlist.playingSince,
+        musicOffset: room.playlist.musicOffset,
       },
-    };
-  };
-
-  private static readonly formatPlaylistCurrent = (
-    current?: CurrentItem,
-  ): object | null => {
-    if (!current) {
-      return null;
-    }
-
-    return {
-      item: RoomView.formatPlaylistItem(current.item),
-      playingSince: current.playingSince,
-      musicOffset: current.musicOffset,
     };
   };
 
@@ -43,9 +30,3 @@ export default class RoomView {
     };
   };
 }
-
-type CurrentItem = {
-  item: PlaylistItem;
-  playingSince: Date;
-  musicOffset: number;
-};

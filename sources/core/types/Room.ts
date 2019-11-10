@@ -8,13 +8,10 @@ export default interface Room {
   name: string;
   members: RoomMember[];
   playlist: {
-    current?: {
-      item: PlaylistItem;
-      playingSince: Date;
-      musicOffset: number; // in milliseconds
-    };
-    nextItems: PlaylistItem[];
+    items: PlaylistItem[];
     isPlaying: boolean;
+    playingSince: Date;
+    musicOffset: number; // in milliseconds
   };
 }
 

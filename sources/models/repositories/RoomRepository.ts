@@ -101,7 +101,7 @@ export default class RoomRepository {
     room: RoomDocument,
     playlistItem: PlaylistItem,
   ): Promise<void> => {
-    room.playlist.nextItems.push(playlistItem);
+    room.playlist.items.push(playlistItem);
     await room.save();
   };
 }

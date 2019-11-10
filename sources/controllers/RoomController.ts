@@ -23,9 +23,10 @@ export default class RoomController {
       name: ctx.t("room.field.name.default"),
       members: [],
       playlist: {
-        current: undefined,
-        nextItems: [],
+        items: [],
         isPlaying: false,
+        playingSince: new Date(),
+        musicOffset: 0,
       },
     });
 

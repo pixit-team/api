@@ -2,36 +2,34 @@
 
 ```ts
 interface RoomMember {
-    id: ObjectId;
-    name: string;
-    isConnected: bool;
+  id: ObjectId;
+  name: string;
+  isConnected: bool;
 }
 ```
 
 ```ts
 interface PlaylistItem {
-    videoId: string;
-    uuid: string;
-    addedBy: ObjectId; // id of the User that added it
+  videoId: string;
+  uuid: string;
+  addedBy: ObjectId; // id of the User that added it
 
-    // ...
-    // Expand this to include all necessary information (title, description, ...)
+  // ...
+  // Expand this to include all necessary information (title, description, ...)
 }
 ```
 
 ```ts
-interface Room {
-    name: string;
-    members: RoomMembers[];
-    playlist: {
-        current: {
-            item: PlaylistItem,
-            playingSince: Date,
-            musicOffset: number, // in milliseconds
-        },
-        nextItems: PlaylistItem[],
-        isPlaying: boolean,
-    }
+export default interface Room {
+  name: string;
+  uuid: string;
+  members: RoomMember[];
+  playlist: {
+    items: PlaylistItem[];
+    isPlaying: boolean;
+    playingSince: Date;
+    musicOffset: number; // in milliseconds
+  };
 }
 ```
 
@@ -44,6 +42,11 @@ interface Room {
 - "connect"
 - "authenticate" -> {token, roomUuid}
   - SERVER_BROADCAST: "user_join" -> {UserMember}
+
+## Music add
+
+- POST {api}/rooms/:uuid/music-add -> {MusicInfo} // musicInfo is { video_id: "xXxXx", + all additional info }
+  - SERVER_BROADCAST: "music_add" -> {PlaylistItem}
 
 ## Music play
 
@@ -59,11 +62,6 @@ interface Room {
 
 - POST {api}/rooms/:uuid/music-next -> {PlaylistItem.uuid}
   - SERVER_BROADCAST: "music_next"
-
-## Music add
-
-- POST {api}/rooms/:uuid/music-add -> {MusicInfo} // musicInfo is used to create a MusicItem
-  - SERVER_BROADCAST: "music_add" -> {PlaylistItem}
 
 ## Disconnection
 
