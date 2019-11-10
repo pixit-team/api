@@ -23,6 +23,7 @@
     "linebreak-style": "off",
     "import/order": ["error", { "newlines-between": "always" }],
     "no-console": ["error", { "allow": ["info", "warn", "error"] }],
+    "no-param-reassign": "off",
     "no-undef": "off",
     "no-underscore-dangle": "off",
     "object-curly-newline": "off",

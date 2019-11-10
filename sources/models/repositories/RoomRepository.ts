@@ -1,8 +1,10 @@
-import Models from "../Models";
-import { RoomDocument } from "../schemas/RoomSchema";
+import { ObjectId } from "bson";
+
+import PlaylistItem from "../../core/types/PlaylistItem";
 import Room from "../../core/types/Room";
 import RoomMember from "../../core/types/RoomMember";
-import PlaylistItem from "../../core/types/PlaylistItem";
+import Models from "../Models";
+import { RoomDocument } from "../schemas/RoomSchema";
 
 export default class RoomRepository {
   private readonly models: Models;
@@ -45,9 +47,10 @@ export default class RoomRepository {
   };
 
   /**
-   * @param uuid The uuid of the Room
+   * Add a user to a Room
+   *
+   * @param room The Room
    * @param roomMember The roomMember to add to the room
-   * Add a user to a room
    */
   public readonly addUser = async (
     room: RoomDocument,
@@ -58,9 +61,41 @@ export default class RoomRepository {
   };
 
   /**
-   * @param room The room where to add the playlistItem
+   * Update a roomMember' status
+   *
+   * @param room The Room
+   * @param memberId The id of the roomMember
+   * @param isConnected The new status
+   */
+  public readonly setMemberStatus = async (
+    room: RoomDocument,
+    memberId: ObjectId,
+    isConnected: boolean,
+  ): Promise<RoomDocument> => {
+    const memberIdx = room.members.findIndex(m => memberId.equals(m.id));
+    if (memberIdx === -1) {
+      throw new Error("Member not in Room");
+    }
+
+    room.members = room.members.map((m, idx) => {
+      if (idx !== memberIdx) {
+        return m;
+      }
+
+      return {
+        ...m,
+        isConnected,
+      };
+    });
+
+    return room.save();
+  };
+
+  /**
+   * Add a Music to a Room
+   *
+   * @param room The Room
    * @param playlistItem The playlistItem to add in the playlist
-   * Add a user to a room
    */
   public readonly addMusic = async (
     room: RoomDocument,

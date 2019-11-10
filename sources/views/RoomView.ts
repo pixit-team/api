@@ -9,12 +9,12 @@ export default class RoomView {
       members: room.members.map(m => ({
         id: m.id,
         name: m.name,
-        is_connected: m.isConnected,
+        isConnected: m.isConnected,
       })),
       playlist: {
         current: RoomView.formatPlaylistCurrent(room.playlist.current),
-        next_items: room.playlist.nextItems.map(RoomView.formatPlaylistItem),
-        is_playing: room.playlist.isPlaying,
+        nextItems: room.playlist.nextItems.map(RoomView.formatPlaylistItem),
+        isPlaying: room.playlist.isPlaying,
       },
     };
   };
@@ -28,8 +28,8 @@ export default class RoomView {
 
     return {
       item: RoomView.formatPlaylistItem(current.item),
-      playing_since: current.playingSince,
-      music_offset: current.musicOffset,
+      playingSince: current.playingSince,
+      musicOffset: current.musicOffset,
     };
   };
 
@@ -37,9 +37,9 @@ export default class RoomView {
     playlistItem: PlaylistItem,
   ): object => {
     return {
-      video_id: playlistItem.videoId,
+      videoId: playlistItem.videoId,
       uuid: playlistItem.uuid,
-      added_by: playlistItem.addedBy,
+      addedBy: playlistItem.addedBy,
     };
   };
 }
