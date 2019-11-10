@@ -1,7 +1,9 @@
 import { ObjectId } from "bson";
 
 export default interface PlaylistItem {
-  videoId: string;
   uuid: string;
+  videoId: string;
+  title: string;
+  img: string;
   addedBy: ObjectId;
 }

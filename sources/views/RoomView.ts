@@ -26,6 +26,8 @@ export default class RoomView {
     return {
       videoId: playlistItem.videoId,
       uuid: playlistItem.uuid,
+      title: playlistItem.title,
+      img: playlistItem.img,
       addedBy: playlistItem.addedBy,
     };
   };

@@ -2,7 +2,7 @@
 
 ```ts
 interface RoomMember {
-  id: ObjectId;
+  id: string;
   name: string;
   isConnected: bool;
 }
@@ -10,12 +10,11 @@ interface RoomMember {
 
 ```ts
 interface PlaylistItem {
-  videoId: string;
   uuid: string;
-  addedBy: ObjectId; // id of the User that added it
-
-  // ...
-  // Expand this to include all necessary information (title, description, ...)
+  videoId: string;
+  title: string;
+  img: string
+  addedBy: string; // id of the User that added it
 }
 ```
 

@@ -9,6 +9,12 @@ import ApiRoomContext from "../server/contexts/ApiRoomContext";
 import Services from "../services";
 import Views from "../views";
 
+const DEFAULT_PLAYLIST_ITEM = {
+  videoId: "Hy8kmNEo1i8",
+  title: "Scatman (ski-ba-bop-ba-dop-bop) Official Video HD -Scatman John",
+  img: "https://i.ytimg.com/vi/Hy8kmNEo1i8/hqdefault.jpg",
+};
+
 export default class RoomController {
   private readonly repositories: Repositories;
 
@@ -23,13 +29,21 @@ export default class RoomController {
   }
 
   public readonly createRoom = async (ctx: ApiContext): Promise<void> => {
+    const { requestingUser } = ctx.state;
+
     // Create new Room
     const createdRoom = await this.repositories.roomRepository.create({
       uuid: Uuid(),
       name: ctx.t("room.field.name.default"),
       members: [],
       playlist: {
-        items: [],
+        items: [
+          {
+            ...DEFAULT_PLAYLIST_ITEM,
+            uuid: Uuid(),
+            addedBy: requestingUser._id,
+          },
+        ],
         isPlaying: false,
         playingSince: new Date(),
         musicOffset: 0,
@@ -88,14 +102,22 @@ export default class RoomController {
     const { requestingUser, room } = ctx.state;
 
     // Validate request's parameters
-    const videoId: string =
+    const musicId: string =
       ctx.request.body.video_id ||
       ctx.throw(400, ctx.t("req.room.musicAdd.videoId.missing"));
+    const musicTitle: string =
+      ctx.request.body.title ||
+      ctx.throw(400, ctx.t("req.room.musicAdd.videoTitle.missing"));
+    const musicImg: string =
+      ctx.request.body.img ||
+      ctx.throw(400, ctx.t("req.room.musicAdd.videoImg.missing"));
 
     // Create new Music
     const newMusic: PlaylistItem = {
-      videoId,
+      videoId: musicId,
       uuid: Uuid(),
+      title: musicTitle,
+      img: musicImg,
       addedBy: requestingUser._id,
     };
 
