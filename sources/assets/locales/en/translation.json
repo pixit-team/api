@@ -1,8 +1,37 @@
 {
+  "album": {
+    "field": {
+      "name": {
+        "default": "Photo album"
+      }
+    }
+  },
   "api": {
     "greetings": "Welcome to Pixit's API !"
   },
   "req": {
+    "album": {
+      "field": {
+        "uuid": {
+          "missing": "Missing \"uuid\""
+        }
+      },
+      "forbidden": "You cannot access this Album",
+      "notFound": "Album not found",
+      "photoAdd": {
+        "PhotoImg": {
+          "missing": "Missing \"img\""
+        }
+      },
+      "photoRemove": {
+        "forbidden": "Forbidden",
+        "photoUuid": {
+          "missing": "Missing \"uuid\""
+        }
+      },
+      "userAlreadyThere": "User already on Album",
+      "userNotThere": "User not in Album"
+    },
     "auth": {
       "failed": "Failed to log in",
       "invalidBearer": "Invalid token format, \"Bearer\" expected",
@@ -11,20 +40,6 @@
         "loggedIn": "Login successful"
       },
       "required": "Auth required"
-    },
-    "room": {
-      "field": {
-        "uuid": {
-          "missing": "Missing \"uuid\""
-        }
-      },
-      "forbidden": "You cannot access this Room",
-      "musicAdd": {
-        "videoId": {
-          "missing": "Missing \"video_id\""
-        }
-      },
-      "notFound": "Room not found"
     },
     "user": {
       "created": "User created",
@@ -43,13 +58,6 @@
           "invalid": "Password must contain digits, symbols, lowercase and uppercase letters and be at least 8 characters long",
           "missing": "Missing \"password\""
         }
-      }
-    }
-  },
-  "room": {
-    "field": {
-      "name": {
-        "default": "Music room"
       }
     }
   }

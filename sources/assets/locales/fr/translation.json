@@ -1,8 +1,37 @@
 {
+  "album": {
+    "field": {
+      "name": {
+        "default": "Salle de musique"
+      }
+    }
+  },
   "api": {
     "greetings": "Bienvenue sur l'API Pixit !"
   },
   "req": {
+    "album": {
+      "field": {
+        "uuid": {
+          "missing": "Champ \"uuid\" manquant"
+        }
+      },
+      "forbidden": "Vous ne pouvez pas accéder à cette salle",
+      "notFound": "Album non trouvé",
+      "photoAdd": {
+        "PhotoImg": {
+          "missing": "Champ \"img\" manquant"
+        }
+      },
+      "photoRemove": {
+        "forbidden": "Interdit",
+        "photoUuid": {
+          "missing": "Champ \"uuid\" manquant"
+        }
+      },
+      "userAlreadyThere": "Utilisateur déjà présent",
+      "userNotThere": "Utilisateur non présent"
+    },
     "auth": {
       "failed": "La connexion a échouée",
       "invalidBearer": "Token de connexion invalide, le format attendu est \"Bearer\"",
@@ -11,20 +40,6 @@
         "loggedIn": "Connexion réussie"
       },
       "required": "Authenfication nécessaire"
-    },
-    "room": {
-      "field": {
-        "uuid": {
-          "missing": "Champ \"uuid\" manquant"
-        }
-      },
-      "forbidden": "Vous ne pouvez pas accéder à cette salle",
-      "musicAdd": {
-        "videoId": {
-          "missing": "Champ \"video_id\" manquant"
-        }
-      },
-      "notFound": "Room non trouvé"
     },
     "user": {
       "created": "Utilisateur créé",
@@ -43,13 +58,6 @@
           "invalid": "Le mot de passe doit faire au moins 8 charactères et contenir des majuscules, minuscules, chiffres et charactères spéciaux",
           "missing": "Champ \"password\" manquant"
         }
-      }
-    }
-  },
-  "room": {
-    "field": {
-      "name": {
-        "default": "Salle de musique"
       }
     }
   }
