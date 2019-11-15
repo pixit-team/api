@@ -4,18 +4,17 @@ import { createConnection, Connection } from "mongoose";
 import Controllers from "./controllers";
 import ApiEndpointController from "./controllers/ApiEndpointController";
 import AuthLocalController from "./controllers/AuthLocalController";
-import RoomController from "./controllers/RoomController";
+import AlbumController from "./controllers/AlbumController";
 import UserController from "./controllers/UserController";
 // Repositories
 import Models from "./models/Models";
 import Repositories from "./models/repositories";
-import RoomRepository from "./models/repositories/RoomRepository";
+import AlbumRepository from "./models/repositories/AlbumRepository";
 import UserRepository from "./models/repositories/UserRepository";
 // Services
 import Services from "./services";
 import JwtService from "./services/JwtService";
 import PasswordService from "./services/PasswordService";
-import SocketService from "./services/SocketService";
 // Validators
 import Validators from "./validators";
 import EmailValidator from "./validators/EmailValidator";
@@ -24,22 +23,21 @@ import PasswordValidator from "./validators/PasswordValidator";
 // Middlewares
 import Middlewares from "./middlewares";
 import AuthenticatedOnlyMiddleware from "./middlewares/authenticatedOnlyMiddleware";
-import RoomExistsMiddleware from "./middlewares/roomExistsMiddleware";
-import UserInRoomMiddleware from "./middlewares/userInRoomMiddleware";
+import AlbumExistsMiddleware from "./middlewares/albumExistsMiddleware";
+import UserInAlbumMiddleware from "./middlewares/userInAlbumMiddleware";
 // Routers
 import BaseRouter from "./routers/BaseRouter";
 import ApiEndpointRouter from "./routers/ApiEndpointRouter";
 import AuthLocalRouter from "./routers/AuthLocalRouter";
-import RoomRouter from "./routers/RoomRouter";
+import AlbumRouter from "./routers/AlbumRouter";
 import UserRouter from "./routers/UserRouter";
 // Views
 import Views from "./views";
 import UserView from "./views/UserView";
-import RoomView from "./views/RoomView";
+import AlbumView from "./views/AlbumView";
 // modules
 import loadConfig, { Config } from "./config";
 import Server from "./server";
-import socketHandler from "./socketHandler";
 
 const createServer = (conn: Connection, config: Config): Server => {
   // Models
@@ -47,18 +45,13 @@ const createServer = (conn: Connection, config: Config): Server => {
 
   // Create Repositories
   const repositories: Repositories = {
-    roomRepository: new RoomRepository(models),
+    albumRepository: new AlbumRepository(models),
     userRepository: new UserRepository(models),
   };
 
   // Create Services
   const jwtService = new JwtService(config.JWT_PRIVATE_KEY);
-  const socketService = new SocketService();
-  const services = new Services(
-    jwtService,
-    new PasswordService(),
-    socketService,
-  );
+  const services = new Services(jwtService, new PasswordService());
 
   // Create Validators
   const validators = new Validators(
@@ -70,14 +63,14 @@ const createServer = (conn: Connection, config: Config): Server => {
   // Create Views
   const views: Views = {
     userView: new UserView(),
-    roomView: new RoomView(),
+    albumView: new AlbumView(),
   };
 
   // Create Middlewares
   const middlewares: Middlewares = {
     authenticatedOnly: AuthenticatedOnlyMiddleware(repositories, services),
-    roomExists: RoomExistsMiddleware(repositories),
-    userInRoom: UserInRoomMiddleware(),
+    albumExists: AlbumExistsMiddleware(repositories),
+    userInAlbum: UserInAlbumMiddleware(),
   };
 
   // Create Controllers
@@ -89,7 +82,7 @@ const createServer = (conn: Connection, config: Config): Server => {
       validators,
       views,
     ),
-    roomController: new RoomController(repositories, services, views),
+    albumController: new AlbumController(repositories, views),
     userController: new UserController(views),
   };
 
@@ -97,19 +90,12 @@ const createServer = (conn: Connection, config: Config): Server => {
   const routers: BaseRouter[] = [
     new ApiEndpointRouter(controllers),
     new AuthLocalRouter(controllers),
-    new RoomRouter(controllers, middlewares),
+    new AlbumRouter(controllers, middlewares),
     new UserRouter(controllers, middlewares),
   ];
 
   // Create Server
   const server = new Server(routers);
-
-  // SocketService's deferred initialization
-  socketService.deferredInit(
-    server.getServer(),
-    socketHandler(repositories, services),
-  );
-
   return server;
 };
 

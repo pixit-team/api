@@ -1,6 +1,6 @@
 {
   "api": {
-    "greetings": "Welcome to Melosync's API !"
+    "greetings": "Welcome to Pixit's API !"
   },
   "req": {
     "auth": {

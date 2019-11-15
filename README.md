@@ -1,8 +1,5 @@
-# Melosync API
+# Pixit API **forked from Melosync API**
 
-[![Build Status](https://travis-ci.org/melosync/api.svg?branch=master)](https://travis-ci.org/melosync/api)
-
-[Docs](https://melosync.github.io/api/)
 
 ## Table of content
 

@@ -1,5 +1,5 @@
 {
-    "name": "melosync-api",
+    "name": "pixit-api",
     "version": "0.1.0",
     "main": "sources/main.ts",
     "license": "MIT",

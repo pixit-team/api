@@ -1,7 +1,7 @@
 import { ObjectId } from "bson";
 
-export default interface RoomMember {
+export default interface AlbumMember {
   id: ObjectId;
   name: string;
-  isConnected: boolean;
+  email: string;
 }

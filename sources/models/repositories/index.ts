@@ -1,7 +1,7 @@
-import RoomRepository from "./RoomRepository";
+import AlbumRepository from "./AlbumRepository";
 import UserRepository from "./UserRepository";
 
 export default interface Repositories {
-  readonly roomRepository: RoomRepository;
+  readonly albumRepository: AlbumRepository;
   readonly userRepository: UserRepository;
 }
