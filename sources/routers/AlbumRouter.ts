@@ -7,12 +7,24 @@ export default class AlbumRouter extends BaseRouter {
   constructor(controllers: Controllers, middlewares: Middlewares) {
     super("/albums");
 
-    this.router.get("/", controllers.albumController.getAlbums); // Keep it for debug  // TODO Remove
-
     this.router.get(
       "/",
       middlewares.authenticatedOnly,
+      controllers.albumController.getAlbums,
+    );
+
+    this.router.get(
+      "/myAlbums",
+      middlewares.authenticatedOnly,
       controllers.albumController.myAlbums,
+    );
+
+    this.router.get(
+      "/:albumUuid",
+      middlewares.authenticatedOnly,
+      middlewares.albumExists,
+      middlewares.userInAlbum,
+      controllers.albumController.getAlbum,
     );
 
     this.router.post(

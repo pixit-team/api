@@ -34,14 +34,41 @@ export default class AlbumController {
     };
   };
 
-  // TODO: REMOVE (here for debug purpose)
   public readonly getAlbums = async (ctx: ApiContext): Promise<void> => {
     const albums = await this.repositories.albumRepository.getAll();
 
     ctx.status = 200;
     ctx.body = {
       message: "OK",
-      albums,
+      albums: albums.map(album => {
+        return this.views.albumView.formatSnippetAlbum(album);
+      }),
+    };
+  };
+
+  public readonly myAlbums = async (ctx: ApiContext): Promise<void> => {
+    const { requestingUser } = ctx.state;
+
+    const albums = await this.repositories.albumRepository.findForUser(
+      requestingUser.email,
+    );
+
+    ctx.status = 200;
+    ctx.body = {
+      message: "OK",
+      albums: albums.map(album => {
+        return this.views.albumView.formatSnippetAlbum(album);
+      }),
+    };
+  };
+
+  public readonly getAlbum = async (ctx: ApiAlbumContext): Promise<void> => {
+    const { album } = ctx.state;
+
+    ctx.status = 200;
+    ctx.body = {
+      message: "OK",
+      album: this.views.albumView.formatAlbum(album),
     };
   };
 
@@ -113,6 +140,7 @@ export default class AlbumController {
     ctx.status = 200;
     ctx.body = {
       message: "OK",
+      photo: newPhoto,
     };
   };
 
@@ -137,20 +165,6 @@ export default class AlbumController {
     ctx.status = 204;
     ctx.body = {
       message: "OK",
-    };
-  };
-
-  public readonly myAlbums = async (ctx: ApiContext): Promise<void> => {
-    const { requestingUser } = ctx.state;
-
-    const albums = await this.repositories.albumRepository.findForUser(
-      requestingUser.email,
-    );
-
-    ctx.status = 200;
-    ctx.body = {
-      message: "OK",
-      albums,
     };
   };
 }

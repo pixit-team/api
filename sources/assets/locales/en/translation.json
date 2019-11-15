@@ -29,7 +29,7 @@
           "missing": "Missing \"uuid\""
         }
       },
-      "userAlreadyThere": "User already on Album",
+      "userAlreadyThere": "User already in Album",
       "userNotThere": "User not in Album"
     },
     "auth": {
