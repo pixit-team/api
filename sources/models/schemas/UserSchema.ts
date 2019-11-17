@@ -21,6 +21,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  firebaseToken: {
+    type: String,
+    required: true,
+  },
 });
 
 export function registerUserModel(conn: Connection): Model<UserDocument> {

@@ -37,7 +37,9 @@ export default class AuthLocalController {
     const userPassword: string =
       ctx.request.body.password ||
       ctx.throw(400, ctx.t("req.user.field.password.missing"));
-
+    const firebaseToken: string =
+      ctx.request.body.firebaseToken ||
+      ctx.throw(400, ctx.t("req.user.field.firebaseToken.missing"));
     // Validate fields
     if (!this.validators.emailValidator.validate(userEmail)) {
       ctx.throw(400, ctx.t("req.user.field.email.invalid"));
@@ -65,6 +67,7 @@ export default class AuthLocalController {
       email: userEmail,
       name: userName,
       cipheredPassword,
+      firebaseToken,
     });
 
     ctx.status = 201;

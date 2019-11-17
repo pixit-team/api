@@ -19,11 +19,23 @@ export default class AlbumController {
   }
 
   public readonly createAlbum = async (ctx: ApiContext): Promise<void> => {
+    const { requestingUser } = ctx.state;
+
+    const albumName: string =
+      ctx.request.body.name ||
+      ctx.throw(400, ctx.t("req.album.create.name.missing"));
+
+    const newMember: AlbumMember = {
+      id: requestingUser._id,
+      name: requestingUser.name,
+      email: requestingUser.email,
+    };
+
     // Create new Album
     const createdAlbum = await this.repositories.albumRepository.create({
       uuid: Uuid(),
-      name: ctx.t("album.field.name.default"),
-      members: [],
+      name: albumName,
+      members: [newMember],
       items: [],
     });
 
