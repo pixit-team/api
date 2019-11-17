@@ -23,7 +23,6 @@ export default class AlbumRouter extends BaseRouter {
       "/:albumUuid",
       middlewares.authenticatedOnly,
       middlewares.albumExists,
-      middlewares.userInAlbum,
       controllers.albumController.getAlbum,
     );
 

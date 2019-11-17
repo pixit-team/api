@@ -7,6 +7,7 @@ import Repositories from "../models/repositories";
 import ApiAlbumContext from "../server/contexts/ApiAlbumContext";
 import ApiContext from "../server/contexts/ApiContext";
 import Views from "../views";
+import envOrThrow from "../utils/envOrThrow";
 
 export default class AlbumController {
   private readonly repositories: Repositories;
@@ -47,7 +48,11 @@ export default class AlbumController {
   };
 
   public readonly getAlbums = async (ctx: ApiContext): Promise<void> => {
-    const albums = await this.repositories.albumRepository.getAll();
+    const { requestingUser } = ctx.state;
+
+    const albums = await this.repositories.albumRepository.getAll(
+      requestingUser.email,
+    );
 
     ctx.status = 200;
     ctx.body = {
@@ -149,6 +154,33 @@ export default class AlbumController {
 
     await this.repositories.albumRepository.saveAlbum(album);
 
+    const firebaseKey = `key=${envOrThrow("FIREBASE_PRIVATE_KEY")}`;
+    for (let i = 0; i < album.members.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const member = await this.repositories.userRepository.findOneByEmail(
+        album.members[i].email,
+      );
+      if (member === null) {
+        ctx.throw(400, "error");
+        return;
+      }
+      ctx.post(
+        "",
+        {
+          notification: {
+            title: "New Photo",
+            text: `A new Photo has been added in ${album.name}`,
+            sound: "default",
+          },
+          priority: "High",
+          to: member.firebaseToken,
+        },
+        {
+          Authorization: firebaseKey,
+          "Content-Type": "application/json",
+        },
+      );
+    }
     ctx.status = 200;
     ctx.body = {
       message: "OK",

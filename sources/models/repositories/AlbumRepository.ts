@@ -52,8 +52,10 @@ export default class AlbumRepository {
    *
    * @return  All albums
    */
-  public readonly getAll = async (): Promise<AlbumDocument[]> => {
-    return this.models.albumModel.find().exec();
+  public readonly getAll = async (email: string): Promise<AlbumDocument[]> => {
+    return this.models.albumModel
+      .find({ "members.email": { $ne: email } })
+      .exec();
   };
 
   /**

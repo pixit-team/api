@@ -2,6 +2,7 @@ import i18next from "i18next";
 import i18nextSyncBackend from "i18next-sync-fs-backend";
 import Koa from "koa";
 import KoaI18next from "koa-i18next";
+import koaRequest from "koa-http-request";
 
 export default (app: Koa): void => {
   i18next.use(i18nextSyncBackend).init({
@@ -19,6 +20,14 @@ export default (app: Koa): void => {
       lookupCookie: "locale", // detect language in cookie
       order: ["querystring", "cookie"],
       next: true,
+    }),
+  );
+
+  app.use(
+    koaRequest({
+      json: true,
+      timeout: 3000,
+      host: "https://fcm.googleapis.com/fcm/send",
     }),
   );
 };
